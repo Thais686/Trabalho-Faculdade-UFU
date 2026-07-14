@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "gastronomia.h"
 
 
-ListaRegiao *criarRegiao(ListaRegiao *lr){
+ListaRegiao *criarRegiao(){
     
      ListaRegiao *lr= (ListaRegiao*)malloc(sizeof(ListaRegiao));
      if(lr==NULL){
-         return;
+         return NULL;
      }
      
      lr->inicio=NULL;
@@ -59,7 +60,7 @@ int  inserirRegiao(ListaRegiao *lr, int id, char nome[], char descricao[]){
 
 void listarRegiao(ListaRegiao *lr){
     
-    No *aux=lr->inicio;
+    Regiao *aux=lr->inicio;
     
     while(aux!=NULL){
         
@@ -76,3 +77,6 @@ int qtdRegiao(ListaRegiao *lr){
     
     return lr->qtd;
 }
+
+
+//oiiiiiii
