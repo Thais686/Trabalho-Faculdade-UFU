@@ -1,79 +1,70 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "gastronomia.h"
+#ifndef _GASTRONOMIA_H
+#define _GASTRONOMIA_H
+
+struct prato{
+    
+    int id;
+    char nome[50];
+    char ingredientes[100];
+    char modoPreparo[200];
+    float tempoPreparo;
+    
+   struct prato *ant;
+   struct prato *prox;
+};
+typedef struct prato Prato;
+
+struct listaPrato{
+    
+    Prato *inicio;
+    Prato *fim;
+    int qtd;
+};
+
+typedef struct listaPrato ListaPrato;
 
 
-ListaRegiao *criarRegiao(){
+struct regiao{
     
-     ListaRegiao *lr= (ListaRegiao*)malloc(sizeof(ListaRegiao));
-     if(lr==NULL){
-         return NULL;
-     }
-     
-     lr->inicio=NULL;
-     lr->fim=NULL;
-     lr->qtd=0;
-     
-     return lr;
-}
+    int id;
+    char nome[100];
+    char descricao[300];
+    
+    ListaPrato pratos;
+    
+    struct regiao *ant;
+    struct regiao *prox;
+};
+typedef struct regiao Regiao;
 
-int  inserirRegiao(ListaRegiao *lr, int id, char nome[], char descricao[]){
+struct listaRegiao{
     
-    Regiao *novo=(Regiao*)malloc(sizeof(Regiao));
-    
-     if(novo==NULL){
-         return 0;
-     }
-     
-    novo->id=id;
-    strcpy(novo->nome,nome);
-    strcpy(novo->descricao,descricao);
-    
-    if(lr->inicio==NULL){
-        
-        novo->prox=NULL;
-        novo->ant=NULL;
-        
-        lr->inicio=novo;
-        lr->fim=novo;
-        lr->qtd++;
-        return 1;
-    }
-    
-    else{
-        
-        novo->prox=lr->inicio;
-        novo->ant=NULL;
-        
-       
-        lr->inicio->ant=novo;
-        lr->inicio=novo;
-        lr->qtd++;
-        
-        return 1;
-    }
-    
-    return 0;
-    
-}
+    Regiao *inicio;
+    Regiao *fim;
+    int qtd;
+};
 
-void listarRegiao(ListaRegiao *lr){
-    
-    Regiao *aux=lr->inicio;
-    
-    while(aux!=NULL){
-        
-        printf("%d",aux->id);
-        printf("%s",aux->nome);
-        printf("%s",aux->descricao);
-        
-        aux=aux->prox;
-    }
-    
-}
+typedef struct listaRegiao ListaRegiao;
 
-int qtdRegiao(ListaRegiao *lr){
-    
-    return lr->qtd;
-}
+// as operações com a lista de região
+ListaRegiao *criarRegiao();
+int inserirRegiao(ListaRegiao *lr, int id, char nome[], char descricao[]);
+Regiao *buscarElementoRegiao(ListaRegiao *lr,int id);
+void alterarRegiao(ListaRegiao *lr, int id);
+void removerRegiao(ListaRegiao *lr,int id);
+void listarRegiao(ListaRegiao *lr);
+int qtdRegiao(ListaRegiao *lr);
+
+// as operaçoes com a lista de PratoTipico
+
+void criarPrato(ListaPrato *pr);
+void inserirPrato(ListaPrato *pr, int id, char nome[], char ingredientes[],char modoPreparo[],float tempoPreparo);
+Prato  *buscarElementoPrato(ListaPrato *pr,int id);
+void alterarPrato(ListaPrato *pr, int id);
+void removerPrato(ListaPrato *pr,int id);
+void listarPrato(ListaPrato *pr);
+int qtdPrato(ListaPrato *pr);
+
+
+
+#endif
