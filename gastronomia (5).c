@@ -79,4 +79,28 @@ int qtdRegiao(ListaRegiao *lr){
 }
 
 
+    void RemoverRegiao(ListaRegiao *lr, int iden){
+        Regiao *atual = lr->inicio;
+        while (atual != NULL && atual->id != iden){
+            atual = atual -> prox;
+        }
+        if (atual == NULL){
+            printf("id não encontrado");
+        }
+        
+        if (atual->ant != NULL){ //não era o primeiro
+            atual->ant = atual ->prox;
+        }else { //era o primeiro
+            lr->inicio = atual->prox;
+        }
+        
+        if (atual->prox != NULL){ //não era o ultimo
+            atual->prox->ant = atual->ant;
+        }else{ //era o ultimo
+            lr->fim = atual->ant;
+        }
+        free(atual);
+        lr->qtd--;
+    }
+
 //oiiiiiii
