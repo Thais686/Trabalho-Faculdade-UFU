@@ -25,7 +25,9 @@ int  inserirRegiao(ListaRegiao *lr, int id, char nome[], char descricao[]){
      if(novo==NULL){
          return 0;
      }
-     
+     if(buscarElementoRegiao(lr,id)!=NULL){
+    return 0;
+     }
     novo->id=id;
     strcpy(novo->nome,nome);
     strcpy(novo->descricao,descricao);
@@ -79,28 +81,100 @@ int qtdRegiao(ListaRegiao *lr){
 }
 
 
-    void RemoverRegiao(ListaRegiao *lr, int iden){
-        Regiao *atual = lr->inicio;
+void removerRegiao(ListaRegiao *lr, int iden){
+        
+        // lembrar de na hora de fazer colocar o remover prato 
+        
+    if(lr->inicio==NULL){
+            
+        return;
+     }
+    
+    
+    if(lr->inicio==lr->fim){
+        
+    if(lr->inicio->id==iden){
+            
+        free(lr->inicio);
+        lr->inicio=NULL;
+        lr->fim=NULL;
+        lr->qtd--;
+        return;
+            
+        }
+    }
+    
+    if(lr->inicio->id==iden){
+       
+       Regiao *aux=lr->inicio;
+       
+       lr->inicio=aux->prox;
+       lr->inicio->ant=NULL;
+       lr->qtd--;
+       free(aux);
+       
+       return;
+   }
+   
+   Regiao *atual = lr->inicio;
+   
         while (atual != NULL && atual->id != iden){
             atual = atual -> prox;
         }
         if (atual == NULL){
             printf("id não encontrado");
+            return;
         }
         
-        if (atual->ant != NULL){ //não era o primeiro
-            atual->ant = atual ->prox;
-        }else { //era o primeiro
-            lr->inicio = atual->prox;
-        }
-        
-        if (atual->prox != NULL){ //não era o ultimo
-            atual->prox->ant = atual->ant;
-        }else{ //era o ultimo
-            lr->fim = atual->ant;
-        }
-        free(atual);
+        if(atual==lr->fim){
+       
+       lr->fim=atual->ant;
+       lr->fim->prox=NULL;
+       
+       free(atual);
+       
+   }
+   
+   else{
+       
+       atual->ant->prox=atual->prox;
+       atual->prox->ant=atual->ant;
+       
+       free(atual);
+   }
         lr->qtd--;
     }
 
-//oiiiiiii
+Regiao*buscarElementoRegiao(ListaRegiao *lr,int id){
+    
+     Regiao *aux=lr->inicio;
+    
+    while(aux!=NULL){
+        
+        if(aux->id==id){
+            
+            return aux;
+        }
+        
+        aux=aux->prox;
+    }
+    
+    return NULL;
+}
+    
+void alterarRegiao(ListaRegiao *lr,int id){
+
+    Regiao *r = buscarElementoRegiao(lr,id);
+
+    if(r==NULL){
+        printf("Nao encontrada");
+        return;
+    }
+
+    printf("Novo nome: ");
+    scanf(" %[^\n]", r->nome);
+
+    printf("Nova descricao: ");
+    scanf(" %[^\n]", r->descricao);
+}
+
