@@ -57,13 +57,13 @@ int qtdRegiao(ListaRegiao *lr);
 
 // as operaçoes com a lista de PratoTipico
 
-void criarPrato(ListaPrato *pr);
-void inserirPrato(ListaPrato *pr, int id, char nome[], char ingredientes[],char modoPreparo[],float tempoPreparo);
-Prato  *buscarElementoPrato(ListaPrato *pr,int id);
-void alterarPrato(ListaPrato *pr, int id);
-void removerPrato(ListaPrato *pr,int id);
-void listarPrato(ListaPrato *pr);
-int qtdPrato(ListaPrato *pr);
+ListaPrato *criarPrato();
+int inserirPrato(ListaPrato *lp, int id, char nome[], char ingredientes[],char modoPreparo[],float tempoPreparo);
+Prato  *BuscarElementoPrato(ListaPrato *lp,int id);
+void alterarPrato(ListaPrato *lp, int id);
+void removerPrato(ListaPrato *lp,int id);
+void listarPrato(ListaPrato *lp);
+int qtdPrato(ListaPrato *lp);
 
 
 
