@@ -3,6 +3,93 @@
 #include <string.h>
 #include "gastronomia.h"
 
+void carregarRegioes(ListaRegiao *lr){
+
+    FILE *arq;
+
+    arq = fopen("regioes.txt","r");
+
+    if(arq == NULL){
+        printf("Erro ao abrir arquivo de regioes\n");
+        return;
+    }
+
+
+    int id;
+    char nome[100];
+    char descricao[300];
+
+
+    while(fscanf(arq,"%d",&id)==1){
+
+        fscanf(arq," %[^\n]",nome);
+        fscanf(arq," %[^\n]",descricao);
+
+
+        inserirRegiao(lr,id,nome,descricao);
+    }
+
+
+    fclose(arq);
+}
+
+void carregarPratos(ListaRegiao *lr){
+
+    FILE *arq;
+
+    arq = fopen("pratos.txt","r");
+
+    if(arq == NULL){
+        printf("Erro ao abrir arquivo de pratos\n");
+        return;
+    }
+
+
+    int idRegiao;
+    int idPrato;
+
+    char nome[50];
+    char ingredientes[100];
+    char modo[200];
+
+    float tempo;
+
+
+    while(fscanf(arq,"%d",&idRegiao)==1){
+
+
+        fscanf(arq,"%d",&idPrato);
+
+        fscanf(arq," %[^\n]",nome);
+
+        fscanf(arq," %[^\n]",ingredientes);
+
+        fscanf(arq," %[^\n]",modo);
+
+        fscanf(arq,"%f",&tempo);
+
+
+
+        Regiao *r = buscarElementoRegiao(lr,idRegiao);
+
+
+        if(r != NULL){
+
+            inserirPrato(&r->pratos,
+                         idPrato,
+                         nome,
+                         ingredientes,
+                         modo,
+                         tempo);
+        }
+
+    }
+
+
+    fclose(arq);
+}
+
+
 
 ListaRegiao *criarRegiao() {
 
@@ -26,11 +113,16 @@ int  inserirRegiao(ListaRegiao *lr, int id, char nome[], char descricao[]) {
 		return 0;
 	}
 	if(buscarElementoRegiao(lr,id)!=NULL) {
+	    free(novo);
 		return 0;
 	}
 	novo->id=id;
 	strcpy(novo->nome,nome);
 	strcpy(novo->descricao,descricao);
+	
+	novo->pratos.inicio=NULL;
+    novo->pratos.fim=NULL;
+    novo->pratos.qtd=0;
 
 	if(lr->inicio==NULL) {
 
@@ -66,9 +158,9 @@ void listarRegiao(ListaRegiao *lr) {
 
 	while(aux!=NULL) {
 
-		printf("%d",aux->id);
-		printf("%s",aux->nome);
-		printf("%s",aux->descricao);
+		printf("\n Id: %d",aux->id);
+		printf("\n Nome: %s",aux->nome);
+		printf("\n Desceição: %s",aux->descricao);
 
 		aux=aux->prox;
 	}
@@ -174,7 +266,7 @@ void alterarRegiao(ListaRegiao *lr,int id) {
 	printf("Novo nome: ");
 	scanf(" %[^\n]", r->nome);
 
-	printf("Nova descricao: ");
+	printf("\n Nova descricao: ");
 	scanf(" %[^\n]", r->descricao);
 }
 
@@ -192,17 +284,21 @@ ListaPrato *criarPrato() {
 }
 
 
-int inserirPrato(ListaPrato *lp, int id, char nome[], char ingredientes[],char modoPreparo[],float tempoPreparo) {
+int inserirPrato(ListaPrato *lp, int id, char nome[], char ingredientes[],char modoPreparo[],float tempoPreparo){
+    
+    
 	Prato *novoprato = (Prato*) malloc(sizeof(Prato));
 	if (novoprato == NULL) {
 		return 0;
-		if (BuscarElementoPrato(lp, id)!= NULL) {
+	}
+	
+	if (buscarElementoPrato(lp, id)!= NULL) {
 			free(novoprato);
 			return 0;
 		}
-	}
 
-	novoprato->id =  id;
+
+	novoprato->id = id;
 	strcpy(novoprato->nome, nome);
 	strcpy(novoprato->ingredientes, ingredientes);
 	strcpy(novoprato->modoPreparo, modoPreparo);
@@ -226,7 +322,7 @@ int inserirPrato(ListaPrato *lp, int id, char nome[], char ingredientes[],char m
 }
 
 
-Prato  *BuscarElementoPrato(ListaPrato *lp,int id) {
+Prato *buscarElementoPrato(ListaPrato *lp,int id) {
 	Prato *aux= lp->inicio;
 
 	while(aux!=NULL) {
@@ -239,7 +335,9 @@ Prato  *BuscarElementoPrato(ListaPrato *lp,int id) {
 }
 
 void alterarPrato(ListaPrato *lp, int id){
-	Prato *p = BuscarElementoPrato(lp,id);
+    
+    
+	Prato *p = buscarElementoPrato(lp,id);
 
 	if(p==NULL) {
 		printf("Nao encontrada");
@@ -255,12 +353,14 @@ void alterarPrato(ListaPrato *lp, int id){
 	printf("Novo modo de preparo: ");
 	scanf(" %[^\n]", p->modoPreparo);
 	
-	printf("Novo modo tempo de preparo: ");
-	scanf(" %[^\n]", p->tempoPreparo);
+	printf("Novo tempo de preparo: ");
+	scanf("%f",&p->tempoPreparo);
 }
 
 
 void removerPrato(ListaPrato *lp,int id){
+    
+    
     	if(lp->inicio==NULL) {
 
 		return;
@@ -322,19 +422,17 @@ void removerPrato(ListaPrato *lp,int id){
 }
     
 
-
-
 void listarPrato(ListaPrato *lp){
 
 	Prato *aux=lp->inicio;
 
 	while(aux!=NULL) {
 
-		printf("%d",aux->id);
-		printf("%s",aux->nome);
-		printf("%s",aux->ingredientes);
-		printf("%s",aux->modoPreparo);
-		printf("%s",aux->tempoPreparo);
+		printf("\n Id: %d ",aux->id);
+		printf("\n Nome: %s: ",aux->nome);
+		printf("\n Ingredientes: %s ",aux->ingredientes);
+		printf("\n Modo Preparo: %s ",aux->modoPreparo);
+		printf("\n Tempo Preparo: %f ",aux->tempoPreparo);
 		aux=aux->prox;
 }
 }
