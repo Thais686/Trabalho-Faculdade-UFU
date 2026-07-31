@@ -1,0 +1,27 @@
+1
+1
+Churrasco
+Carne bovina e sal grosso
+Assar a carne na churrasqueira
+120
+
+1
+2
+Arroz Carreteiro
+Arroz carne seca e temperos
+Cozinhar todos os ingredientes juntos
+60
+
+2
+1
+Baião de Dois
+Arroz feijao queijo e carne seca
+Misturar e cozinhar os ingredientes
+90
+
+3
+1
+Feijoada
+Feijao preto carnes e temperos
+Cozinhar por varias horas
+180
