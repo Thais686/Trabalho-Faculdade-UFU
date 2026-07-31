@@ -46,6 +46,9 @@ struct listaRegiao{
 
 typedef struct listaRegiao ListaRegiao;
 
+void carregarRegioes(ListaRegiao *lr);
+void carregarPratos(ListaRegiao *lr);
+
 // as operações com a lista de região
 ListaRegiao *criarRegiao();
 int inserirRegiao(ListaRegiao *lr, int id, char nome[], char descricao[]);
@@ -59,7 +62,7 @@ int qtdRegiao(ListaRegiao *lr);
 
 ListaPrato *criarPrato();
 int inserirPrato(ListaPrato *lp, int id, char nome[], char ingredientes[],char modoPreparo[],float tempoPreparo);
-Prato  *BuscarElementoPrato(ListaPrato *lp,int id);
+Prato *buscarElementoPrato(ListaPrato *lp,int id);
 void alterarPrato(ListaPrato *lp, int id);
 void removerPrato(ListaPrato *lp,int id);
 void listarPrato(ListaPrato *lp);
