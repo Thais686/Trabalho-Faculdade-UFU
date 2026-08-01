@@ -17,7 +17,7 @@ void carregarRegioes(ListaRegiao *lr){
 
     int id;
     char nome[100];
-    char descricao[300];
+    char descricao[400];
 
 
     while(fscanf(arq,"%d",&id)==1){
@@ -48,9 +48,9 @@ void carregarPratos(ListaRegiao *lr){
     int idRegiao;
     int idPrato;
 
-    char nome[50];
-    char ingredientes[100];
-    char modo[200];
+    char nome[500];
+    char ingredientes[700];
+    char modo[700];
 
     float tempo;
 
