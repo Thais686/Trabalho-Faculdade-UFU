@@ -4,9 +4,9 @@
 struct prato{
     
     int id;
-    char nome[50];
-    char ingredientes[100];
-    char modoPreparo[200];
+    char nome[500];
+    char ingredientes[700];
+    char modoPreparo[700];
     float tempoPreparo;
     
    struct prato *ant;
@@ -28,7 +28,7 @@ struct regiao{
     
     int id;
     char nome[100];
-    char descricao[300];
+    char descricao[400];
     
     ListaPrato pratos;
     
