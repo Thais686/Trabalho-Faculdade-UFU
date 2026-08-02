@@ -344,12 +344,18 @@ int main()
 		case 13:
 		{
 
-			float tempo;
+			if(qtdRegiao(lr) == 0) {
+				printf("Nenhuma regiao cadastrada!\n");
+			}
+			else {
 
-			printf("Pratos para fazer em: ");
-			scanf("%f",&tempo);
+				float tempo;
 
-			filtrarTempo(lr,tempo);
+				printf("Pratos para fazer em: ");
+				scanf("%f",&tempo);
+
+				filtrarTempo(lr, tempo);
+			}
 
 			break;
 
@@ -358,12 +364,18 @@ int main()
 		case 14:
 		{
 
-			char nome[50];
+			if(qtdRegiao(lr) == 0) {
+				printf("Nenhuma regiao cadastrada!\n");
+			}
+			else {
 
-			printf("Digite o nome do prato: ");
-			scanf(" %[^\n]", nome);
+				char nome[50];
 
-			localizarPrato(lr,nome);
+				printf("Digite o nome do prato: ");
+				scanf(" %[^\n]", nome);
+
+				localizarPrato(lr, nome);
+			}
 
 			break;
 
@@ -371,11 +383,15 @@ int main()
 
 		case 15:
 		{
-		    
-			listarTodosPratos(lr);
+
+			if(qtdRegiao(lr) == 0) {
+				printf("Nenhuma regiao cadastrada!\n");
+			}
+			else {
+				listarTodosPratos(lr);
+			}
 
 			break;
-
 		}
 		case 16:
 		{
@@ -390,37 +406,50 @@ int main()
 
 			break;
 		}
-		
+
 		case 17:
 		{
 
-			float tempo;
-            char ingrediente[100];
 
-            printf("Digite o tempo de preparo: ");
-            scanf("%f", &tempo);
+			if(qtdRegiao(lr) == 0) {
+				printf("Nenhuma regiao cadastrada!\n");
+			}
+			else {
 
-            printf("Digite um ingrediente: ");
-            scanf(" %[^\n]", ingrediente);
+				float tempo;
+				char ingrediente[100];
 
-            filtrarTempoIngrediente(lr, tempo, ingrediente);
-            
-            break;
+				printf("Digite o tempo de preparo: ");
+				scanf("%f", &tempo);
+
+				printf("Digite um ingrediente: ");
+				scanf(" %[^\n]", ingrediente);
+
+				filtrarTempoIngrediente(lr, tempo, ingrediente);
+			}
+
+			break;
 		}
-		
-			case 18:
+
+		case 18:
 		{
 
-		float tempo;
+			if(qtdRegiao(lr) == 0) {
+				printf("Nenhuma regiao cadastrada!\n");
+			}
+			else {
 
-        printf("Mostrar pratos com tempo de preparo de ate: ");
-        scanf("%f", &tempo);
+				float tempo;
 
-        menorTempo(lr, tempo);
-            
-            break;
+				printf("Mostrar pratos com tempo de preparo de ate: ");
+				scanf("%f", &tempo);
+
+				menorTempo(lr, tempo);
+			}
+
+			break;
 		}
-		
+
 
 		case 0: {
 
