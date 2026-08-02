@@ -172,56 +172,56 @@ int qtdRegiao(ListaRegiao *lr) {
 	return lr->qtd;
 }
 
-void removerTodosPratos(ListaPrato *lp){
+void removerTodosPratos(ListaPrato *lp) {
 
-    Prato *aux = lp->inicio;
+	Prato *aux = lp->inicio;
 
-    while(aux != NULL){
+	while(aux != NULL) {
 
-        int id = aux->id;
+		int id = aux->id;
 
-        aux = aux->prox;
+		aux = aux->prox;
 
-        removerPrato(lp, id);
-    }
+		removerPrato(lp, id);
+	}
 }
 
 
-void removerRegiao(ListaRegiao *lr, int id){
+void removerRegiao(ListaRegiao *lr, int id) {
 
-    if(lr == NULL || lr->inicio == NULL){
-        return;
-    }
+	if(lr == NULL || lr->inicio == NULL) {
+		return;
+	}
 
-    Regiao *atual = lr->inicio;
+	Regiao *atual = lr->inicio;
 
-    while(atual != NULL && atual->id != id){
-        atual = atual->prox;
-    }
+	while(atual != NULL && atual->id != id) {
+		atual = atual->prox;
+	}
 
-    if(atual == NULL){
-        printf("Regiao nao encontrada!\n");
-        return;
-    }
+	if(atual == NULL) {
+		printf("Regiao nao encontrada!\n");
+		return;
+	}
 
-    removerTodosPratos(&atual->pratos);
+	removerTodosPratos(&atual->pratos);
 
-    if(atual->ant == NULL){
-        lr->inicio = atual->prox;
-    }
-    else{
-        atual->ant->prox = atual->prox;
-    }
+	if(atual->ant == NULL) {
+		lr->inicio = atual->prox;
+	}
+	else {
+		atual->ant->prox = atual->prox;
+	}
 
-    if(atual->prox == NULL){
-        lr->fim = atual->ant;
-    }
-    else{
-        atual->prox->ant = atual->ant;
-    }
+	if(atual->prox == NULL) {
+		lr->fim = atual->ant;
+	}
+	else {
+		atual->prox->ant = atual->ant;
+	}
 
-    free(atual);
-    lr->qtd--;
+	free(atual);
+	lr->qtd--;
 }
 
 Regiao*buscarElementoRegiao(ListaRegiao *lr,int id) {
@@ -347,40 +347,40 @@ void alterarPrato(ListaPrato *lp, int id) {
 
 
 
-void removerPrato(ListaPrato *lp, int id){
+void removerPrato(ListaPrato *lp, int id) {
 
-    if(lp == NULL || lp->inicio == NULL){
-        return;
-    }
+	if(lp == NULL || lp->inicio == NULL) {
+		return;
+	}
 
-    Prato *atual = lp->inicio;
+	Prato *atual = lp->inicio;
 
-    // Procura o prato
-    while(atual != NULL && atual->id != id){
-        atual = atual->prox;
-    }
+	// Procura o prato
+	while(atual != NULL && atual->id != id) {
+		atual = atual->prox;
+	}
 
-    if(atual == NULL){
-        printf("Prato nao encontrado!\n");
-        return;
-    }
+	if(atual == NULL) {
+		printf("Prato nao encontrado!\n");
+		return;
+	}
 
-    if(atual->ant == NULL){
-        lp->inicio = atual->prox;
-    }
-    else{
-        atual->ant->prox = atual->prox;
-    }
+	if(atual->ant == NULL) {
+		lp->inicio = atual->prox;
+	}
+	else {
+		atual->ant->prox = atual->prox;
+	}
 
-    if(atual->prox == NULL){
-        lp->fim = atual->ant;
-    }
-    else{
-        atual->prox->ant = atual->ant;
-    }
+	if(atual->prox == NULL) {
+		lp->fim = atual->ant;
+	}
+	else {
+		atual->prox->ant = atual->ant;
+	}
 
-    free(atual);
-    lp->qtd--;
+	free(atual);
+	lp->qtd--;
 }
 
 
@@ -404,204 +404,203 @@ int qtdPrato(ListaPrato *lp) {
 	return lp->qtd;
 }
 
-void filtrarTempo(ListaRegiao *lr, float tempo){
+void filtrarTempo(ListaRegiao *lr, float tempo) {
 
-    Regiao *r = lr->inicio;
-    int encontrou = 0;
+	Regiao *r = lr->inicio;
+	int encontrou = 0;
 
-    while(r != NULL){
+	while(r != NULL) {
 
-        Prato *p = r->pratos.inicio;
+		Prato *p = r->pratos.inicio;
 
-        while(p != NULL){
+		while(p != NULL) {
 
-            if(p->tempoPreparo == tempo){
+			if(p->tempoPreparo == tempo) {
 
-                printf("\nRegiao: %s", r->nome);
-                printf("\nPrato: %s", p->nome);
-                printf("\nIngredientes: %s", p->ingredientes);
-                printf("\nModo de preparo: %s", p->modoPreparo);
-                printf("\nTempo de preparo: %.2f minutos\n", p->tempoPreparo);
+				printf("\nRegiao: %s", r->nome);
+				printf("\nPrato: %s", p->nome);
+				printf("\nIngredientes: %s", p->ingredientes);
+				printf("\nModo de preparo: %s", p->modoPreparo);
+				printf("\nTempo de preparo: %.2f minutos\n", p->tempoPreparo);
 
-                encontrou = 1;
-            }
+				encontrou = 1;
+			}
 
-            p = p->prox;
-        }
+			p = p->prox;
+		}
 
-        r = r->prox;
-    }
+		r = r->prox;
+	}
 
-    if(encontrou == 0){
-        printf("Nenhum prato encontrado com esse tempo.\n");
-    }
+	if(encontrou == 0) {
+		printf("Nenhum prato encontrado com esse tempo.\n");
+	}
 }
 
 
-void localizarPrato(ListaRegiao *lr, char nome[]){
+void localizarPrato(ListaRegiao *lr, char nome[]) {
 
-    Regiao *r = lr->inicio;
+	Regiao *r = lr->inicio;
 
-    while(r != NULL){
+	while(r != NULL) {
 
-        Prato *p = r->pratos.inicio;
+		Prato *p = r->pratos.inicio;
 
-        while(p != NULL){
+		while(p != NULL) {
 
-            if(strcmp(p->nome, nome) == 0){
+			if(strcmp(p->nome, nome) == 0) {
 
-                printf("\nPrato encontrado!\n");
-                printf("Regiao: %s\n", r->nome);
-                printf("Nome: %s\n", p->nome);
-                printf("Ingredientes: %s\n", p->ingredientes);
-                printf("Modo de preparo: %s\n", p->modoPreparo);
-                printf("Tempo de preparo: %.2f minutos\n", p->tempoPreparo);
+				printf("\nPrato encontrado!\n");
+				printf("Regiao: %s\n", r->nome);
+				printf("Nome: %s\n", p->nome);
+				printf("Ingredientes: %s\n", p->ingredientes);
+				printf("Modo de preparo: %s\n", p->modoPreparo);
+				printf("Tempo de preparo: %.2f minutos\n", p->tempoPreparo);
 
-                return;
-            }
+				return;
+			}
 
-            p = p->prox;
-        }
+			p = p->prox;
+		}
 
-        r = r->prox;
-    }
+		r = r->prox;
+	}
 
-    printf("\nPrato nao encontrado!\n");
+	printf("\nPrato nao encontrado!\n");
 }
 
-void listarTodosPratos(ListaRegiao *lr){
+void listarTodosPratos(ListaRegiao *lr) {
 
-    Regiao *r = lr->inicio;
-    int encontrou = 0;
+	Regiao *r = lr->inicio;
+	int encontrou = 0;
 
-    while(r != NULL){
+	while(r != NULL) {
 
-        Prato *p = r->pratos.inicio;
+		Prato *p = r->pratos.inicio;
 
-        while(p != NULL){
+		while(p != NULL) {
 
-            printf("\nRegiao: %s", r->nome);
-            printf("\nPrato: %s\n", p->nome);
+			printf("\nRegiao: %s", r->nome);
+			printf("\nPrato: %s\n", p->nome);
 
-            encontrou = 1;
+			encontrou = 1;
 
-            p = p->prox;
-        }
+			p = p->prox;
+		}
 
-        r = r->prox;
-    }
+		r = r->prox;
+	}
 
-    if(encontrou == 0){
-        printf("Nenhum prato cadastrado!\n");
-    }
+	if(encontrou == 0) {
+		printf("Nenhum prato cadastrado!\n");
+	}
+}
+void relatorioGeral(ListaRegiao *lr) {
+
+	if(lr == NULL) {
+		return;
+	}
+
+	Regiao *r = lr->inicio;
+	int totalPratos = 0;
+
+	printf("\n========== RELATORIO GERAL ==========\n");
+	printf("\nQuantidade de regioes cadastradas: %d\n", lr->qtd);
+
+	while(r != NULL) {
+
+		printf("\n====================================");
+		printf("\nRegiao: %s", r->nome);
+		printf("\nDescricao: %s", r->descricao);
+		printf("\nQuantidade de pratos: %d\n", r->pratos.qtd);
+
+		Prato *p = r->pratos.inicio;
+
+		while(p != NULL) {
+
+			printf("\n----------- PRATO -----------");
+			printf("\nId: %d", p->id);
+			printf("\nNome: %s", p->nome);
+			printf("\nIngredientes: %s", p->ingredientes);
+			printf("\nModo de preparo: %s", p->modoPreparo);
+			printf("\nTempo de preparo: %.2f minutos\n", p->tempoPreparo);
+
+			totalPratos++;
+
+			p = p->prox;
+		}
+
+		r = r->prox;
+	}
+
+	printf("\n====================================");
+	printf("\nTotal de pratos cadastrados: %d", totalPratos);
+	printf("\n====================================\n");
 }
 
-void relatorioGeral(ListaRegiao *lr){
+void filtrarTempoIngrediente(ListaRegiao *lr, float tempo, char ingrediente[]) {
 
-    if(lr == NULL){
-        return;
-    }
+	Regiao *r = lr->inicio;
+	int encontrou = 0;
 
-    Regiao *r = lr->inicio;
-    int totalPratos = 0;
+	while(r != NULL) {
 
-    printf("\n========== RELATORIO GERAL ==========\n");
-    printf("\nQuantidade de regioes cadastradas: %d\n", lr->qtd);
+		Prato *p = r->pratos.inicio;
 
-    while(r != NULL){
+		while(p != NULL) {
 
-        printf("\n====================================");
-        printf("\nRegiao: %s", r->nome);
-        printf("\nDescricao: %s", r->descricao);
-        printf("\nQuantidade de pratos: %d\n", r->pratos.qtd);
+			if(p->tempoPreparo == tempo &&
+			        strstr(p->ingredientes, ingrediente) != NULL) {
 
-        Prato *p = r->pratos.inicio;
+				printf("\nRegiao: %s", r->nome);
+				printf("\nPrato: %s", p->nome);
+				printf("\nIngredientes: %s", p->ingredientes);
+				printf("\nModo de preparo: %s", p->modoPreparo);
+				printf("\nTempo de preparo: %.2f minutos\n", p->tempoPreparo);
 
-        while(p != NULL){
+				encontrou = 1;
+			}
 
-            printf("\n----------- PRATO -----------");
-            printf("\nId: %d", p->id);
-            printf("\nNome: %s", p->nome);
-            printf("\nIngredientes: %s", p->ingredientes);
-            printf("\nModo de preparo: %s", p->modoPreparo);
-            printf("\nTempo de preparo: %.2f minutos\n", p->tempoPreparo);
+			p = p->prox;
+		}
 
-            totalPratos++;
+		r = r->prox;
+	}
 
-            p = p->prox;
-        }
-
-        r = r->prox;
-    }
-
-    printf("\n====================================");
-    printf("\nTotal de pratos cadastrados: %d", totalPratos);
-    printf("\n====================================\n");
+	if(encontrou == 0) {
+		printf("\nNenhum prato encontrado com esses criterios.\n");
+	}
 }
 
-void filtrarTempoIngrediente(ListaRegiao *lr, float tempo, char ingrediente[]){
+void menorTempo(ListaRegiao *lr, float tempo) {
 
-    Regiao *r = lr->inicio;
-    int encontrou = 0;
+	Regiao *r = lr->inicio;
+	int encontrou = 0;
 
-    while(r != NULL){
+	while(r != NULL) {
 
-        Prato *p = r->pratos.inicio;
+		Prato *p = r->pratos.inicio;
 
-        while(p != NULL){
+		while(p != NULL) {
 
-            if(p->tempoPreparo == tempo &&
-               strstr(p->ingredientes, ingrediente) != NULL){
+			if(p->tempoPreparo <= tempo) {
 
-                printf("\nRegiao: %s", r->nome);
-                printf("\nPrato: %s", p->nome);
-                printf("\nIngredientes: %s", p->ingredientes);
-                printf("\nModo de preparo: %s", p->modoPreparo);
-                printf("\nTempo de preparo: %.2f minutos\n", p->tempoPreparo);
+				printf("\nRegiao: %s", r->nome);
+				printf("\nPrato: %s", p->nome);
+				printf("\nIngredientes: %s", p->ingredientes);
+				printf("\nModo de preparo: %s", p->modoPreparo);
+				printf("\nTempo de preparo: %.2f minutos\n", p->tempoPreparo);
 
-                encontrou = 1;
-            }
+				encontrou = 1;
+			}
 
-            p = p->prox;
-        }
+			p = p->prox;
+		}
 
-        r = r->prox;
-    }
+		r = r->prox;
+	}
 
-    if(encontrou == 0){
-        printf("\nNenhum prato encontrado com esses criterios.\n");
-    }
-}
-
-void menorTempo(ListaRegiao *lr, float tempo){
-
-    Regiao *r = lr->inicio;
-    int encontrou = 0;
-
-    while(r != NULL){
-
-        Prato *p = r->pratos.inicio;
-
-        while(p != NULL){
-
-            if(p->tempoPreparo <= tempo){
-
-                printf("\nRegiao: %s", r->nome);
-                printf("\nPrato: %s", p->nome);
-                printf("\nIngredientes: %s", p->ingredientes);
-                printf("\nModo de preparo: %s", p->modoPreparo);
-                printf("\nTempo de preparo: %.2f minutos\n", p->tempoPreparo);
-
-                encontrou = 1;
-            }
-
-            p = p->prox;
-        }
-
-        r = r->prox;
-    }
-
-    if(encontrou == 0){
-        printf("\nNenhum prato encontrado com tempo de preparo de ate %.2f minutos.\n", tempo);
-    }
+	if(encontrou == 0) {
+		printf("\nNenhum prato encontrado com tempo de preparo de ate %.2f minutos.\n", tempo);
+	}
 }
