@@ -5,9 +5,9 @@
 int main()
 {
 	ListaRegiao *lr = criarRegiao();
-	
+
 	carregarRegioes(lr);
-    carregarPratos(lr);
+	carregarPratos(lr);
 
 	int op;
 
@@ -26,6 +26,12 @@ int main()
 		printf("10 - Buscar Prato\n");
 		printf("11 - Listar Pratos de uma Regiao\n");
 		printf("12 - Quantidade de Pratos de uma Regiao\n");
+		printf("13 - Pratos para fazer com um determinado tempo\n");
+		printf("14 - Localizar o prato em qualquer região \n");
+		printf("15 - Listar todos os pratos \n");
+		printf("16 - Relatorio Geral \n");
+		printf("17 - Filtrar pelo ingrediente e tempo \n");
+		printf("18 - Buscar pratos com tempo de preparo menor ou igual ao informado\n");
 		printf("0 - Sair\n");
 
 		scanf("%d",&op);
@@ -335,12 +341,93 @@ int main()
 
 		}
 
-		case 0: {
+		case 13:
+		{
+
+			float tempo;
+
+			printf("Pratos para fazer em: ");
+			scanf("%f",&tempo);
+
+			filtrarTempo(lr,tempo);
+
+			break;
+
+		}
+
+		case 14:
+		{
+
+			char nome[50];
+
+			printf("Digite o nome do prato: ");
+			scanf(" %[^\n]", nome);
+
+			localizarPrato(lr,nome);
+
+			break;
+
+		}
+
+		case 15:
+		{
 		    
-			printf("Encerrando...\n");
+			listarTodosPratos(lr);
+
+			break;
+
+		}
+		case 16:
+		{
+
+			if(qtdRegiao(lr) == 0) {
+
+				printf("Nenhum dado cadastrado!\n");
+			}
+			else {
+				relatorioGeral(lr);
+			}
+
 			break;
 		}
 		
+		case 17:
+		{
+
+			float tempo;
+            char ingrediente[100];
+
+            printf("Digite o tempo de preparo: ");
+            scanf("%f", &tempo);
+
+            printf("Digite um ingrediente: ");
+            scanf(" %[^\n]", ingrediente);
+
+            filtrarTempoIngrediente(lr, tempo, ingrediente);
+            
+            break;
+		}
+		
+			case 18:
+		{
+
+		float tempo;
+
+        printf("Mostrar pratos com tempo de preparo de ate: ");
+        scanf("%f", &tempo);
+
+        menorTempo(lr, tempo);
+            
+            break;
+		}
+		
+
+		case 0: {
+
+			printf("Encerrando...\n");
+			break;
+		}
+
 		}
 	} while(op != 0);
 
