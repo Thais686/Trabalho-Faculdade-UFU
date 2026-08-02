@@ -392,10 +392,10 @@ void listarPrato(ListaPrato *lp) {
 	while(aux!=NULL) {
 
 		printf("\n Id: %d ",aux->id);
-		printf("\n Nome: %s: ",aux->nome);
+		printf("\n  Nome: %s ",aux->nome);
 		printf("\n Ingredientes: %s ",aux->ingredientes);
 		printf("\n Modo Preparo: %s ",aux->modoPreparo);
-		printf("\n Tempo Preparo: %f ",aux->tempoPreparo);
+		printf("\n Tempo Preparo: %.2f ",aux->tempoPreparo);
 		aux=aux->prox;
 	}
 }
