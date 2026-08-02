@@ -68,6 +68,14 @@ void removerPrato(ListaPrato *lp,int id);
 void listarPrato(ListaPrato *lp);
 int qtdPrato(ListaPrato *lp);
 
+// operaçoes adicionais
 
+void removerTodosPratos(ListaPrato *lp);
+void filtrarTempo(ListaRegiao *lr,float tempo);
+void localizarPrato(ListaRegiao *lr, char nome[]);
+void listarTodosPratos(ListaRegiao *lr);
+void relatorioGeral(ListaRegiao *lr);
+void filtrarTempoIngrediente(ListaRegiao *lr, float tempo, char ingrediente[]);
+void menorTempo(ListaRegiao *lr, float tempo);
 
 #endif
