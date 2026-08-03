@@ -72,7 +72,11 @@ int main()
 			printf("Digite o ID da regiao: ");
 			scanf("%d",&id);
 
-			alterarRegiao(lr,id);
+			if (alterarRegiao(lr, id)) {
+				printf("Regiao alterada com sucesso!\n");
+			} else {
+				printf("Regiao nao encontrada!\n");
+			}
 
 			break;
 		}
@@ -84,12 +88,10 @@ int main()
 			printf("Digite o ID da regiao que deseja remover: ");
 			scanf("%d", &id);
 
-			if(buscarElementoRegiao(lr, id) == NULL) {
-				printf("Regiao nao encontrada!\n");
-			}
-			else {
-				removerRegiao(lr, id);
+			if (removerRegiao(lr, id)) {
 				printf("Regiao removida com sucesso!\n");
+			} else {
+				printf("Regiao nao encontrada!\n");
 			}
 
 			break;
@@ -194,26 +196,29 @@ int main()
 
 		case 8:
 		{
-
 			int idRegiao;
 			int idPrato;
 
 			Regiao *r;
 
 			printf("Digite o ID da regiao: ");
-			scanf("%d",&idRegiao);
+			scanf("%d", &idRegiao);
 
-			r = buscarElementoRegiao(lr,idRegiao);
+			r = buscarElementoRegiao(lr, idRegiao);
 
-			if(r == NULL) {
+			if (r == NULL) {
 				printf("Regiao nao encontrada!\n");
 				break;
 			}
 
 			printf("Digite o ID do prato: ");
-			scanf("%d",&idPrato);
+			scanf("%d", &idPrato);
 
-			alterarPrato(&r->pratos,idPrato);
+			if (alterarPrato(&r->pratos, idPrato)) {
+				printf("Prato alterado com sucesso!\n");
+			} else {
+				printf("Prato nao encontrado!\n");
+			}
 
 			break;
 		}
