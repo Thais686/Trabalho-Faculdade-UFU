@@ -187,10 +187,10 @@ void removerTodosPratos(ListaPrato *lp) {
 }
 
 
-void removerRegiao(ListaRegiao *lr, int id) {
+int  removerRegiao(ListaRegiao *lr, int id) {
 
 	if(lr == NULL || lr->inicio == NULL) {
-		return;
+		return 0;
 	}
 
 	Regiao *atual = lr->inicio;
@@ -200,8 +200,7 @@ void removerRegiao(ListaRegiao *lr, int id) {
 	}
 
 	if(atual == NULL) {
-		printf("Regiao nao encontrada!\n");
-		return;
+		return 0;
 	}
 
 	removerTodosPratos(&atual->pratos);
@@ -222,6 +221,8 @@ void removerRegiao(ListaRegiao *lr, int id) {
 
 	free(atual);
 	lr->qtd--;
+
+	return 1;
 }
 
 Regiao*buscarElementoRegiao(ListaRegiao *lr,int id) {
@@ -241,13 +242,12 @@ Regiao*buscarElementoRegiao(ListaRegiao *lr,int id) {
 	return NULL;
 }
 
-void alterarRegiao(ListaRegiao *lr,int id) {
+int alterarRegiao(ListaRegiao *lr,int id) {
 
 	Regiao *r = buscarElementoRegiao(lr,id);
 
 	if(r==NULL) {
-		printf("Nao encontrada");
-		return;
+		return 0;
 	}
 
 	printf("Novo nome: ");
@@ -255,6 +255,8 @@ void alterarRegiao(ListaRegiao *lr,int id) {
 
 	printf("\n Nova descricao: ");
 	scanf(" %[^\n]", r->descricao);
+
+	return 1;
 }
 
 
@@ -321,14 +323,13 @@ Prato *buscarElementoPrato(ListaPrato *lp,int id) {
 	return NULL;
 }
 
-void alterarPrato(ListaPrato *lp, int id) {
+int alterarPrato(ListaPrato *lp, int id) {
 
 
 	Prato *p = buscarElementoPrato(lp,id);
 
 	if(p==NULL) {
-		printf("Nao encontrada");
-		return;
+		return 0;
 	}
 
 	printf("Novo nome: ");
@@ -342,15 +343,17 @@ void alterarPrato(ListaPrato *lp, int id) {
 
 	printf("Novo tempo de preparo: ");
 	scanf("%f",&p->tempoPreparo);
+
+	return 1;
 }
 
 
 
 
-void removerPrato(ListaPrato *lp, int id) {
+int removerPrato(ListaPrato *lp, int id) {
 
 	if(lp == NULL || lp->inicio == NULL) {
-		return;
+		return 0;
 	}
 
 	Prato *atual = lp->inicio;
@@ -361,8 +364,7 @@ void removerPrato(ListaPrato *lp, int id) {
 	}
 
 	if(atual == NULL) {
-		printf("Prato nao encontrado!\n");
-		return;
+		return 0;
 	}
 
 	if(atual->ant == NULL) {
@@ -381,6 +383,8 @@ void removerPrato(ListaPrato *lp, int id) {
 
 	free(atual);
 	lp->qtd--;
+
+	return 1;
 }
 
 
@@ -392,10 +396,10 @@ void listarPrato(ListaPrato *lp) {
 	while(aux!=NULL) {
 
 		printf("\n Id: %d ",aux->id);
-		printf("\n  Nome: %s ",aux->nome);
+		printf("\n Nome: %s: ",aux->nome);
 		printf("\n Ingredientes: %s ",aux->ingredientes);
 		printf("\n Modo Preparo: %s ",aux->modoPreparo);
-		printf("\n Tempo Preparo: %.2f ",aux->tempoPreparo);
+		printf("\n Tempo Preparo: %f ",aux->tempoPreparo);
 		aux=aux->prox;
 	}
 }
