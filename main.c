@@ -42,7 +42,7 @@ int main()
 
 			int id;
 			char nome[100];
-			char descricao[300];
+			char descricao[400];
 
 			printf("ID da regiao: ");
 			scanf("%d",&id);
@@ -145,9 +145,9 @@ int main()
 
 			int idRegiao;
 			int idPrato;
-			char nome[50];
-			char ingredientes[100];
-			char modoPreparo[200];
+			char nome[500];
+			char ingredientes[700];
+			char modoPreparo[700];
 			float tempo;
 
 			Regiao *r;
@@ -223,17 +223,17 @@ int main()
 			break;
 		}
 
-		case 9: {
-
+		case 9:
+		{
 			int idRegiao;
 			int idPrato;
 
 			Regiao *r;
 
 			printf("Digite o ID da regiao: ");
-			scanf("%d",&idRegiao);
+			scanf("%d", &idRegiao);
 
-			r = buscarElementoRegiao(lr,idRegiao);
+			r = buscarElementoRegiao(lr, idRegiao);
 
 			if(r == NULL) {
 				printf("Regiao nao encontrada!\n");
@@ -241,15 +241,13 @@ int main()
 			}
 
 			printf("Digite o ID do prato: ");
-			scanf("%d",&idPrato);
+			scanf("%d", &idPrato);
 
-
-			if(buscarElementoPrato(&r->pratos,idPrato)==NULL) {
-				printf("Prato nao encontrado!\n");
+			if(removerPrato(&r->pratos, idPrato)) {
+				printf("Prato removido com sucesso!\n");
 			}
 			else {
-				removerPrato(&r->pratos,idPrato);
-				printf("Prato removido com sucesso!\n");
+				printf("Prato nao encontrado!\n");
 			}
 
 			break;
@@ -348,18 +346,19 @@ int main()
 
 		case 13:
 		{
+			float tempo;
 
 			if(qtdRegiao(lr) == 0) {
 				printf("Nenhuma regiao cadastrada!\n");
 			}
 			else {
 
-				float tempo;
-
 				printf("Pratos para fazer em: ");
 				scanf("%f",&tempo);
 
-				filtrarTempo(lr, tempo);
+				if (!filtrarTempo(lr, tempo)) {
+					printf("Nenhum prato encontrado com esse tempo.\n");
+				}
 			}
 
 			break;
@@ -374,12 +373,14 @@ int main()
 			}
 			else {
 
-				char nome[50];
+				char nome[500];
 
 				printf("Digite o nome do prato: ");
 				scanf(" %[^\n]", nome);
 
-				localizarPrato(lr, nome);
+				if (!localizarPrato(lr, nome)) {
+					printf("Prato nao encontrado!\n");
+				}
 			}
 
 			break;
@@ -388,12 +389,11 @@ int main()
 
 		case 15:
 		{
-
 			if(qtdRegiao(lr) == 0) {
 				printf("Nenhuma regiao cadastrada!\n");
 			}
-			else {
-				listarTodosPratos(lr);
+			else if(!listarTodosPratos(lr)) {
+				printf("Nenhum prato cadastrado!\n");
 			}
 
 			break;
@@ -401,12 +401,8 @@ int main()
 		case 16:
 		{
 
-			if(qtdRegiao(lr) == 0) {
-
-				printf("Nenhum dado cadastrado!\n");
-			}
-			else {
-				relatorioGeral(lr);
+			if(!relatorioGeral(lr)) {
+				printf("Nenhum dado cadastrado para gerar o relatorio!\n");
 			}
 
 			break;
@@ -415,14 +411,13 @@ int main()
 		case 17:
 		{
 
-
 			if(qtdRegiao(lr) == 0) {
 				printf("Nenhuma regiao cadastrada!\n");
 			}
 			else {
 
 				float tempo;
-				char ingrediente[100];
+				char ingrediente[700];
 
 				printf("Digite o tempo de preparo: ");
 				scanf("%f", &tempo);
@@ -430,7 +425,9 @@ int main()
 				printf("Digite um ingrediente: ");
 				scanf(" %[^\n]", ingrediente);
 
-				filtrarTempoIngrediente(lr, tempo, ingrediente);
+				if (!filtrarTempoIngrediente(lr, tempo, ingrediente)) {
+					printf("Nenhum prato encontrado com esses criterios!\n");
+				}
 			}
 
 			break;
@@ -449,7 +446,9 @@ int main()
 				printf("Mostrar pratos com tempo de preparo de ate: ");
 				scanf("%f", &tempo);
 
-				menorTempo(lr, tempo);
+				if (!menorTempo(lr, tempo)) {
+					printf("Nenhum prato encontrado com tempo de preparo de ate %.2f minutos.\n", tempo);
+				}
 			}
 
 			break;
