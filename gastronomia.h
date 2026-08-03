@@ -71,11 +71,11 @@ int qtdPrato(ListaPrato *lp);
 // operaçoes adicionais
 
 void removerTodosPratos(ListaPrato *lp);
-void filtrarTempo(ListaRegiao *lr,float tempo);
-void localizarPrato(ListaRegiao *lr, char nome[]);
-void listarTodosPratos(ListaRegiao *lr);
-void relatorioGeral(ListaRegiao *lr);
-void filtrarTempoIngrediente(ListaRegiao *lr, float tempo, char ingrediente[]);
-void menorTempo(ListaRegiao *lr, float tempo);
+int filtrarTempo(ListaRegiao *lr,float tempo);
+int localizarPrato(ListaRegiao *lr, char nome[]);
+int listarTodosPratos(ListaRegiao *lr);
+int relatorioGeral(ListaRegiao *lr);
+int filtrarTempoIngrediente(ListaRegiao *lr, float tempo, char ingrediente[]);
+int menorTempo(ListaRegiao *lr, float tempo);
 
 #endif
