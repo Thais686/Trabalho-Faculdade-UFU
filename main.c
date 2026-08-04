@@ -5,6 +5,11 @@
 int main()
 {
 	ListaRegiao *lr = criarRegiao();
+	
+	if(lr == NULL){
+    printf("Erro ao criar lista\n");
+    return 1;
+}
 
 	carregarRegioes(lr);
 	carregarPratos(lr);
@@ -34,8 +39,7 @@ int main()
 		printf("18 - Buscar pratos com tempo de preparo menor ou igual ao informado\n");
 		printf("0 - Sair\n");
 
-		printf("\n");
-		scanf("\n %d",&op);
+		scanf("%d",&op);
 
 		switch(op) {
 
@@ -179,7 +183,7 @@ int main()
 			scanf("%f",&tempo);
 
 
-			if(inserirPrato(&r->pratos,
+			if(inserirPrato(r->pratos,
 			                idPrato,
 			                nome,
 			                ingredientes,
@@ -215,7 +219,7 @@ int main()
 			printf("Digite o ID do prato: ");
 			scanf("%d", &idPrato);
 
-			if (alterarPrato(&r->pratos, idPrato)) {
+			if (alterarPrato(r->pratos, idPrato)) {
 				printf("Prato alterado com sucesso!\n");
 			} else {
 				printf("Prato nao encontrado!\n");
@@ -244,7 +248,7 @@ int main()
 			printf("Digite o ID do prato: ");
 			scanf("%d", &idPrato);
 
-			if(removerPrato(&r->pratos, idPrato)) {
+			if(removerPrato(r->pratos, idPrato)) {
 				printf("Prato removido com sucesso!\n");
 			}
 			else {
@@ -276,7 +280,7 @@ int main()
 			printf("Digite o ID do prato: ");
 			scanf("%d",&idPrato);
 
-			p = buscarElementoPrato(&r->pratos,idPrato);
+			p = buscarElementoPrato(r->pratos,idPrato);
 
 			if(p == NULL) {
 				printf("Prato nao encontrado!\n");
@@ -312,11 +316,11 @@ int main()
 				break;
 			}
 
-			if(qtdPrato(&r->pratos) == 0) {
+			if(qtdPrato(r->pratos) == 0) {
 				printf("Essa regiao nao possui pratos cadastrados!\n");
 			}
 			else {
-				listarPrato(&r->pratos);
+				listarPrato(r->pratos);
 			}
 
 			break;
@@ -339,7 +343,7 @@ int main()
 				break;
 			}
 
-			printf("Quantidade de pratos: %d\n", qtdPrato(&r->pratos));
+			printf("Quantidade de pratos: %d\n", qtdPrato(r->pratos));
 
 			break;
 
@@ -459,6 +463,8 @@ int main()
 		case 0: {
 
 			printf("Encerrando...\n");
+			
+			liberarRegioes(lr);
 			break;
 		}
 
