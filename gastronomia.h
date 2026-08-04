@@ -30,7 +30,7 @@ struct regiao {
 	char nome[100];
 	char descricao[400];
 
-	ListaPrato pratos;
+	ListaPrato *pratos;
 
 	struct regiao *ant;
 	struct regiao *prox;
@@ -77,5 +77,6 @@ int listarTodosPratos(ListaRegiao *lr);
 int relatorioGeral(ListaRegiao *lr);
 int filtrarTempoIngrediente(ListaRegiao *lr, float tempo, char ingrediente[]);
 int menorTempo(ListaRegiao *lr, float tempo);
+void liberarRegioes(ListaRegiao *lr);
 
 #endif
