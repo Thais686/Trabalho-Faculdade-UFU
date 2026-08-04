@@ -75,7 +75,7 @@ void carregarPratos(ListaRegiao *lr) {
 
 		if(r != NULL) {
 
-			inserirPrato(&r->pratos,
+			inserirPrato(r->pratos,
 			             idPrato,
 			             nome,
 			             ingredientes,
@@ -106,6 +106,10 @@ ListaRegiao *criarRegiao() {
 }
 
 int  inserirRegiao(ListaRegiao *lr, int id, char nome[], char descricao[]) {
+     
+     if(lr == NULL){
+        return 0;
+    }
 
 	Regiao *novo=(Regiao*)malloc(sizeof(Regiao));
 
@@ -120,9 +124,13 @@ int  inserirRegiao(ListaRegiao *lr, int id, char nome[], char descricao[]) {
 	strcpy(novo->nome,nome);
 	strcpy(novo->descricao,descricao);
 
-	novo->pratos.inicio=NULL;
-	novo->pratos.fim=NULL;
-	novo->pratos.qtd=0;
+	novo->pratos = criarPrato();
+
+	if(novo->pratos == NULL) {
+		free(novo);
+		return 0;
+	}
+
 
 	if(lr->inicio==NULL) {
 
@@ -152,6 +160,10 @@ int  inserirRegiao(ListaRegiao *lr, int id, char nome[], char descricao[]) {
 }
 
 void listarRegiao(ListaRegiao *lr) {
+    
+    if(lr==NULL){
+        return;
+    }
 
 	Regiao *aux=lr->inicio;
 
@@ -168,7 +180,6 @@ void listarRegiao(ListaRegiao *lr) {
 
 int qtdRegiao(ListaRegiao *lr) {
 
-
 	if(lr == NULL)
 		return 0;
 
@@ -176,6 +187,10 @@ int qtdRegiao(ListaRegiao *lr) {
 }
 
 void removerTodosPratos(ListaPrato *lp) {
+
+	if(lp == NULL) {
+		return;
+	}
 
 	Prato *aux = lp->inicio;
 
@@ -210,7 +225,8 @@ int  removerRegiao(ListaRegiao *lr, int id) {
 		return 0;
 	}
 
-	removerTodosPratos(&atual->pratos);
+	removerTodosPratos(atual->pratos);
+	free(atual->pratos);
 
 	if(atual->ant == NULL) {
 		lr->inicio = atual->prox;
@@ -254,6 +270,10 @@ Regiao*buscarElementoRegiao(ListaRegiao *lr,int id) {
 }
 
 int alterarRegiao(ListaRegiao *lr,int id) {
+    
+    if(lr==NULL){
+        return 0;
+    }
 
 	Regiao *r = buscarElementoRegiao(lr,id);
 
@@ -273,7 +293,9 @@ int alterarRegiao(ListaRegiao *lr,int id) {
 
 
 ListaPrato *criarPrato() {
+
 	ListaPrato *lp = (ListaPrato*) malloc(sizeof(ListaPrato));
+
 	if  (lp == NULL) {
 		return NULL;
 	}
@@ -285,7 +307,10 @@ ListaPrato *criarPrato() {
 
 
 int inserirPrato(ListaPrato *lp, int id, char nome[], char ingredientes[],char modoPreparo[],float tempoPreparo) {
-
+	
+	if(lp == NULL) {
+		return 0;
+	}
 
 	Prato *novoprato = (Prato*) malloc(sizeof(Prato));
 	if (novoprato == NULL) {
@@ -323,10 +348,10 @@ int inserirPrato(ListaPrato *lp, int id, char nome[], char ingredientes[],char m
 
 
 Prato *buscarElementoPrato(ListaPrato *lp,int id) {
-    
-    if(lp == NULL){
-        return NULL;
-    }
+
+	if(lp == NULL) {
+		return NULL;
+	}
 	Prato *aux= lp->inicio;
 
 	while(aux!=NULL) {
@@ -340,6 +365,9 @@ Prato *buscarElementoPrato(ListaPrato *lp,int id) {
 
 int alterarPrato(ListaPrato *lp, int id) {
 
+	if(lp == NULL) {
+		return 0;
+	}
 
 	Prato *p = buscarElementoPrato(lp,id);
 
@@ -373,7 +401,6 @@ int removerPrato(ListaPrato *lp, int id) {
 
 	Prato *atual = lp->inicio;
 
-	// Procura o prato
 	while(atual != NULL && atual->id != id) {
 		atual = atual->prox;
 	}
@@ -406,6 +433,10 @@ int removerPrato(ListaPrato *lp, int id) {
 
 void listarPrato(ListaPrato *lp) {
 
+	if(lp == NULL) {
+		return;
+	}
+
 	Prato *aux=lp->inicio;
 
 	while(aux!=NULL) {
@@ -421,7 +452,6 @@ void listarPrato(ListaPrato *lp) {
 
 int qtdPrato(ListaPrato *lp) {
 
-
 	if(lp == NULL) {
 		return 0;
 	}
@@ -430,12 +460,16 @@ int qtdPrato(ListaPrato *lp) {
 
 int filtrarTempo(ListaRegiao *lr, float tempo) {
 
+	if(lr == NULL) {
+		return 0;
+	}
+
 	Regiao *r = lr->inicio;
 	int encontrou = 0;
 
 	while(r != NULL) {
 
-		Prato *p = r->pratos.inicio;
+		Prato *p = r->pratos->inicio;
 
 		while(p != NULL) {
 
@@ -462,11 +496,16 @@ int filtrarTempo(ListaRegiao *lr, float tempo) {
 
 int localizarPrato(ListaRegiao *lr, char nome[]) {
 
+	if(lr == NULL) {
+		return 0;
+	}
+
+
 	Regiao *r = lr->inicio;
 
 	while(r != NULL) {
 
-		Prato *p = r->pratos.inicio;
+		Prato *p = r->pratos->inicio;
 
 		while(p != NULL) {
 
@@ -493,12 +532,17 @@ int localizarPrato(ListaRegiao *lr, char nome[]) {
 
 int listarTodosPratos(ListaRegiao *lr) {
 
+	if(lr == NULL) {
+		return 0;
+	}
+
+
 	Regiao *r = lr->inicio;
 	int encontrou = 0;
 
 	while(r != NULL) {
 
-		Prato *p = r->pratos.inicio;
+		Prato *p = r->pratos->inicio;
 
 		while(p != NULL) {
 
@@ -532,9 +576,9 @@ int relatorioGeral(ListaRegiao *lr) {
 		printf("\n====================================");
 		printf("\nRegiao: %s", r->nome);
 		printf("\nDescricao: %s", r->descricao);
-		printf("\nQuantidade de pratos: %d\n", r->pratos.qtd);
+		printf("\nQuantidade de pratos: %d\n", r->pratos->qtd);
 
-		Prato *p = r->pratos.inicio;
+		Prato *p = r->pratos->inicio;
 
 		while(p != NULL) {
 
@@ -562,12 +606,17 @@ int relatorioGeral(ListaRegiao *lr) {
 
 int filtrarTempoIngrediente(ListaRegiao *lr, float tempo, char ingrediente[]) {
 
+	if(lr == NULL) {
+		return 0;
+	}
+
+
 	Regiao *r = lr->inicio;
 	int encontrou = 0;
 
 	while(r != NULL) {
 
-		Prato *p = r->pratos.inicio;
+		Prato *p = r->pratos->inicio;
 
 		while(p != NULL) {
 
@@ -594,12 +643,16 @@ int filtrarTempoIngrediente(ListaRegiao *lr, float tempo, char ingrediente[]) {
 
 int menorTempo(ListaRegiao *lr, float tempo) {
 
+	if(lr == NULL) {
+		return 0;
+	}
+
 	Regiao *r = lr->inicio;
 	int encontrou = 0;
 
 	while(r != NULL) {
 
-		Prato *p = r->pratos.inicio;
+		Prato *p = r->pratos->inicio;
 
 		while(p != NULL) {
 
@@ -621,4 +674,28 @@ int menorTempo(ListaRegiao *lr, float tempo) {
 	}
 
 	return encontrou;
+}
+
+void liberarRegioes(ListaRegiao *lr) {
+
+	if(lr == NULL) {
+		return;
+	}
+
+	Regiao *aux = lr->inicio;
+
+	while(aux != NULL) {
+
+		Regiao *temp = aux;
+
+		aux = aux->prox;
+
+		removerTodosPratos(temp->pratos);
+
+		free(temp->pratos);
+
+		free(temp);
+	}
+
+	free(lr);
 }
