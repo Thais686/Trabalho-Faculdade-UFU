@@ -39,6 +39,7 @@ int main()
 		printf("18 - Buscar pratos com tempo de preparo menor ou igual ao informado\n");
 		printf("0 - Sair\n");
 
+		printf("\n");
 		scanf("%d",&op);
 
 		switch(op) {
